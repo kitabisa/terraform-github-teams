@@ -1,0 +1,17 @@
+name: terraform-github-teams
+id: ari:cloud:compass:ae9ec5f8-e892-4eda-9314-548dfad7b7fb:component/2b2df9d4-8719-41e2-ab56-c6f02232532a/072d579e-74b2-4817-829a-306521a75db7
+description: A comprehensive Terraform module for managing GitHub teams and organization membership at scale
+configVersion: 1
+typeId: SERVICE
+fields:
+  tier: 4
+links:
+  - name: null
+    type: REPOSITORY
+    url: https://github.com/kitabisa/terraform-github-teams
+relationships:
+  DEPENDS_ON: []
+labels:
+  - source:github
+  - synced-with-jsm
+customFields: null
