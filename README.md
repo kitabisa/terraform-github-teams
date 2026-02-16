@@ -101,7 +101,7 @@ Map of organization members with their roles
 
 ```hcl
 module "github_teams" {
-  source = "./terraform/github/teams"
+  source = "./terraform-github-teams"
 
   organization = "kitabisa"
 
@@ -130,11 +130,11 @@ module "github_teams" {
 ```hcl
 module "github_teams" {
   source = "./terraform-github-teams"
-
+  
   organization = "kitabisa"
 
   teams = {
-    engineering = {
+    engineer = {
       platform = {
         devops = {
           description = "DevOps Team"
@@ -147,34 +147,26 @@ module "github_teams" {
           maintainers = ["eve"]
         }
       }
+      
       backend = {
         api = {
           members = ["frank", "grace"]
+          inherit_members_from = [
+            "engineer/platform/sre",
+          ]
         }
         data = {
           members = ["henry"]
         }
       }
-      # All team (inherits members from all sub-teams)
-      all = {
-        description = "All Platform Engineers"
-        inherit_members_from = [
-          "engineering/platform/devops",
-          "engineering/platform/sre",
-          "engineering/platform/api",
-          "engineering/platform/data"
-        ]
-      }
-      # Leadership team (inherits only maintainers)
+
       leads = {
-        description = "Platform Leadership"
         inherit_maintainers_from = [
-          "engineering/platform/devops",
-          "engineering/platform/sre"
+          "engineer/platform",
+          "engineer/backend"
         ]
       }
     }
-    non-engineering = {}
   }
 
   org_members = {
