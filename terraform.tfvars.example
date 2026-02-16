@@ -1,0 +1,37 @@
+organization = "kitabisa"
+
+teams = {
+  engineer = {
+    platform = {
+      devops = {
+        description = "DevOps Team"
+        privacy     = "closed"
+        members     = ["alice", "bob"]
+        maintainers = ["charlie"]
+      }
+      sre = {
+        members     = ["david"]
+        maintainers = ["eve"]
+      }
+    }
+    
+    backend = {
+      api = {
+        members = ["frank", "grace"]
+        inherit_members_from = [
+          "engineer/platform/sre",
+        ]
+      }
+      data = {
+        members = ["henry"]
+      }
+    }
+
+    leads = {
+      inherit_maintainers_from = [
+        "engineer/platform",
+        "engineer/backend"
+      ]
+    }
+  }
+}
