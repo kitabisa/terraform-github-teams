@@ -23,7 +23,7 @@ locals {
         name       = l2_key
         value      = l2_val
       }
-      if l2_key != "description" && l2_key != "privacy" && l2_key != "members" && l2_key != "maintainers" && try(l2_val != null && length(keys(l2_val)) > 0, false)
+      if l2_key != "description" && l2_key != "privacy" && l2_key != "members" && l2_key != "maintainers" && l2_key != "inherit_members_from" && l2_key != "inherit_maintainers_from" && try(l2_val != null && length(keys(l2_val)) > 0, false)
     ]
   ])
 
@@ -43,7 +43,7 @@ locals {
         name       = l3_key
         value      = l3_val
       }
-      if l3_key != "parent_key" && l3_key != "name" && l3_key != "description" && l3_key != "privacy" && l3_key != "members" && l3_key != "maintainers"
+      if l3_key != "parent_key" && l3_key != "name" && l3_key != "description" && l3_key != "privacy" && l3_key != "members" && l3_key != "maintainers" && l3_key != "inherit_members_from" && l3_key != "inherit_maintainers_from"
     ]
   ])
 
@@ -62,8 +62,8 @@ locals {
         name       = l4_key
         value      = l4_val
       }
-      if l4_key != "parent_key" && l4_key != "name" && l4_key != "description" && l4_key != "privacy" && l4_key != "members" && l4_key != "maintainers"
-        && can(length(keys(l4_val)))
+      if l4_key != "parent_key" && l4_key != "name" && l4_key != "description" && l4_key != "privacy" && l4_key != "members" && l4_key != "maintainers" && l4_key != "inherit_members_from" && l4_key != "inherit_maintainers_from"
+      && can(length(keys(l4_val)))
     ]
   ])
 
@@ -81,16 +81,16 @@ locals {
   level1_members_flat = flatten([
     for l1_key, l1_val in local.level1_teams : concat(
       [for member in try(l1_val.members, []) : {
-        team_key = l1_key
+        team_key    = l1_key
         team_id_ref = "github_team.level1[\"${l1_key}\"].id"
-        username = member
-        role     = "member"
+        username    = member
+        role        = "member"
       }],
       [for maintainer in try(l1_val.maintainers, []) : {
-        team_key = l1_key
+        team_key    = l1_key
         team_id_ref = "github_team.level1[\"${l1_key}\"].id"
-        username = maintainer
-        role     = "maintainer"
+        username    = maintainer
+        role        = "maintainer"
       }]
     )
   ])
